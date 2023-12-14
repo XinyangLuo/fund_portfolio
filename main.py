@@ -3,9 +3,9 @@ import argparse
 
 import numpy as np
 
-from crawler import get_multiple_returns
-from portfolio import robust_markowitz_robust
-from utils import tabulize_result
+from utils.crawler import get_multiple_returns
+from utils.portfolio import robust_markowitz_robust
+from utils.visualize import tabulize_result
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -16,6 +16,7 @@ if __name__ == '__main__':
         cfg = yaml.safe_load(f)
 
     codes = cfg['codes']
+    codes = [str(c) for c in codes]
     T = cfg['look_back']
     df = get_multiple_returns(codes, T)
 

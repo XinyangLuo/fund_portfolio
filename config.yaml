@@ -1,0 +1,9 @@
+codes: ['002943', '006479', '000006']
+look_back: 90
+
+robust_markowitz_robust:
+    kappa: 1.0
+    delta: 0.1
+    lambda: 0.5
+
+method: 'robust_markowitz_robust'

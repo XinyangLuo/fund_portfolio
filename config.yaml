@@ -14,4 +14,7 @@ mean_cvar:
     lambda: 0.5
     alpha: 0.95
 
-method: 'mean_cvar'
+mean_max_draw_down:
+    c: 0.2
+
+method: 'mean_max_draw_down'

@@ -36,3 +36,19 @@ def mean_cvar(X: np.ndarray, lmd=0.5, alpha=0.95):
     prob = cp.Problem(obj, constraints)
     prob.solve()
     return w.value
+
+def mean_max_drawdown(X, c=0.2):
+    T, N = X.shape
+    X_cum = np.cumsum(X, axis=0)
+    mu = X.mean(axis=0)
+    w = cp.Variable(N)
+    u = cp.Variable(T)
+
+    obj = cp.Maximize(w.T @ mu)
+    constraints = [w >= 0, sum(w) == 1,
+                   u <= X_cum @ w + c,
+                   u >= X_cum @ w,
+                   u[1:] >= u[:-1]]
+    prob = cp.Problem(obj, constraints)
+    prob.solve()
+    return w.value

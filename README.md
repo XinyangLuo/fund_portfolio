@@ -33,7 +33,7 @@ $$
 
 $$
 
-### Mean-downside risk portfolio
+### Mean downside risk portfolio
 
 $$
 \begin{align*}
@@ -43,14 +43,26 @@ $$
 \end{align*}
 $$
 
-### Mean-CVaR portfolio
+### Mean CVaR portfolio
 
 $$
 \begin{align*}
     \max\limits_{w,z,\zeta} & \quad w^T\mu - \lambda(\zeta + \frac{1}{1-\alpha}\frac{1}{T}\sum\limits_{t=1}^Tz_t) \\
     s.t. & \quad 1^Tw = 1 \\
-    & \quad w \geq 0\\
+    & \quad w \geq 0 \\
     & \quad z \geq 0 \\
     & \quad z_t \geq -w^Tr_t - \zeta
+\end{align*}
+$$
+
+### Mean Max Drawdown portfolio
+
+$$
+\begin{align*}
+    \max\limits_{w,u} & \quad w^T\mu \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0 \\
+    & \quad u_{t-1} \leq u_t \quad \forall 1 < t \leq T \\
+    & \quad w^Tr_t^{cum} \leq u_t \leq w^Tr_t^{cum} + c \quad \forall 1 \leq t \leq T
 \end{align*}
 $$

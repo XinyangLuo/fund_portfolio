@@ -20,6 +20,7 @@ if __name__ == '__main__':
     codes = [str(c) for c in codes]
     T = cfg['look_back']
     df = get_multiple_returns(codes, T)
+    X = df.to_numpy()
 
     if cfg['method'] == 'robust_markowitz_robust':
         mu = df.mean(axis=0).to_numpy()
@@ -31,11 +32,14 @@ if __name__ == '__main__':
     elif cfg['method'] == 'mean_downside_risk':
         lmd = cfg['mean_downside_risk']['lambda']
         alpha = cfg['mean_downside_risk']['alpha']
-        w = portfolio.mean_downsid_risk(df.to_numpy(), lmd, alpha)
+        w = portfolio.mean_downsid_risk(X, lmd, alpha)
     elif cfg['method'] == 'mean_cvar':
         lmd = cfg['mean_cvar']['lambda']
         alpha = cfg['mean_cvar']['alpha']
-        w = portfolio.mean_cvar(df.to_numpy(), lmd, alpha)
+        w = portfolio.mean_cvar(X, lmd, alpha)
+    elif cfg['method'] == 'mean_max_draw_down':
+        c = cfg['mean_max_draw_down']['c']
+        w = portfolio.mean_max_drawdown(X, c)
     else:
         w = None
         print('Please Specify an implemented method')

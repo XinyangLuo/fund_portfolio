@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import numpy as np
 from tqdm import tqdm
 
 def get_fund_k_history(fund_code: str, T: int = 90) -> pd.Series:
@@ -12,7 +13,7 @@ def get_fund_k_history(fund_code: str, T: int = 90) -> pd.Series:
 
     Return
     ------
-    pd.Series : historical daily return
+    pd.Series : historical daily log return
     '''
     # header
     EastmoneyFundHeaders = {
@@ -85,4 +86,6 @@ def get_multiple_returns(codes: list[str], T: int=90) -> pd.DataFrame:
             t.set_postfix({'fetching': code})
     df = pd.concat(df, axis=1)
     df.columns = codes
-    return df.iloc[1:-1].astype(float)
+    df = df.iloc[1:-1].astype(float)
+    df = (df/100+1).apply(np.log)
+    return df

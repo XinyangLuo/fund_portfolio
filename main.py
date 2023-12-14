@@ -48,6 +48,8 @@ if __name__ == '__main__':
             c = cfg['mean_cdar']['c']
             alpha = cfg['mean_cdar']['alpha']
             w = portfolio.mean_CDaR(X, c, alpha)
+        case 'most_diversified':
+            w = portfolio.most_diversified(X)
         case _:
             w = None
             print('Please Specify an implemented method')

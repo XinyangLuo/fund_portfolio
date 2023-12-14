@@ -87,3 +87,14 @@ def mean_CDaR(X: np.ndarray, c: float=0.1, alpha: float=0.95) -> np.ndarray:
     prob = cp.Problem(obj, constraints)
     prob.solve()
     return w.value
+
+def most_diversified(X: np.ndarray) -> np.ndarray:
+    T, N = X.shape
+    Sigma = np.cov(X.T)
+    w = cp.Variable(N)
+
+    obj = cp.Minimize(cp.quad_form(w, Sigma))
+    constraints = [w >= 0, w.T @ Sigma.diagonal() == 1]
+    prob = cp.Problem(obj, constraints)
+    prob.solve()
+    return w.value/sum(w.value)

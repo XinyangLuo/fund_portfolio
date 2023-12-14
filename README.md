@@ -94,3 +94,14 @@ $$
     & \quad u_{t} \geq u_{t-1}
 \end{align*}
 $$
+
+### Most Diversified Portfolio
+
+$$
+\begin{align*}
+    \max\limits_w & \quad \frac{w^T\sigma}{\sqrt{w^T\Sigma w}} \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0 \\
+    
+\end{align*}
+$$

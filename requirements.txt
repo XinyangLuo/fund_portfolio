@@ -5,3 +5,4 @@ numpy
 cvxpy
 pyyaml
 prettytable
+scipy

@@ -10,4 +10,8 @@ mean_downside_risk:
     lambda: 0.5
     alpha: 2
 
-method: 'mean_downside_risk'
+mean_cvar:
+    lambda: 0.5
+    alpha: 0.95
+
+method: 'mean_cvar'

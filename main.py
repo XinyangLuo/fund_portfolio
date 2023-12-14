@@ -32,6 +32,10 @@ if __name__ == '__main__':
         lmd = cfg['mean_downside_risk']['lambda']
         alpha = cfg['mean_downside_risk']['alpha']
         w = portfolio.mean_downsid_risk(df.to_numpy(), lmd, alpha)
+    elif cfg['method'] == 'mean_cvar':
+        lmd = cfg['mean_cvar']['lambda']
+        alpha = cfg['mean_cvar']['alpha']
+        w = portfolio.mean_cvar(df.to_numpy(), lmd, alpha)
     else:
         w = None
         print('Please Specify an implemented method')

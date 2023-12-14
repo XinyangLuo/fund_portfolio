@@ -42,3 +42,15 @@ $$
     & \quad w \geq 0
 \end{align*}
 $$
+
+### Mean-CVaR portfolio
+
+$$
+\begin{align*}
+    \max\limits_{w,z,\zeta} & \quad w^T\mu - \lambda(\zeta + \frac{1}{1-\alpha}\frac{1}{T}\sum\limits_{t=1}^Tz_t) \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0\\
+    & \quad z \geq 0 \\
+    & \quad z_t \geq -w^Tr_t - \zeta
+\end{align*}
+$$

@@ -16,8 +16,23 @@ def mean_downsid_risk(X: np.ndarray, lmd=0.5, alpha=2):
     T, N = X.shape
     mu = X.mean(axis=0)
     w = cp.Variable(N)
+
     obj = cp.Maximize(w.T @ mu - lmd/T*sum(cp.pos(mu.T @ w - X @ w)**alpha))
     constraints = [w >= 0, sum(w) == 1]
+    prob = cp.Problem(obj, constraints)
+    prob.solve()
+    return w.value
+
+def mean_cvar(X: np.ndarray, lmd=0.5, alpha=0.95):
+    T, N = X.shape
+    mu = X.mean(axis=0)
+    w = cp.Variable(N)
+    z = cp.Variable(T)
+    zeta = cp.Variable(1)
+
+    obj = cp.Maximize(w.T @ mu - lmd*(zeta + 1/(T*(1-alpha))*sum(z)))
+    constraints = [w >= 0, sum(w) == 1, z >= 0,
+                   z >= -X @ w -zeta]
     prob = cp.Problem(obj, constraints)
     prob.solve()
     return w.value

@@ -62,8 +62,8 @@ $$
     \max\limits_{w,u} & \quad w^T\mu \\
     s.t. & \quad 1^Tw = 1 \\
     & \quad w \geq 0 \\
-    & \quad u_{t-1} \leq u_t \quad \forall 1 < t \leq T \\
-    & \quad w^Tr_t^{cum} \leq u_t \leq w^Tr_t^{cum} + c \quad \forall 1 \leq t \leq T
+    & \quad u_{t-1} \leq u_t \\
+    & \quad w^Tr_t^{cum} \leq u_t \leq w^Tr_t^{cum} + c
 \end{align*}
 $$
 
@@ -77,5 +77,20 @@ $$
     & \quad u_{t-1} \leq u_t \quad \forall 1 < t \leq T \\
     & \quad w^Tr_t^{cum} \leq u_t \\
     & \quad \frac{1}{T}\sum\limits_{t=1}^Tu_t \leq \frac{1}{T}\sum\limits_{t=1}^Tw^Tr_t^{cum} + c
+\end{align*}
+$$
+
+### Mean CDaR portfolio
+
+$$
+\begin{align*}
+    \max\limits_{w,u,z,\zeta} & \quad w^T\mu \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0 \\
+    & \quad \zeta + \frac{1}{1-\alpha}\frac{1}{T}\sum\limits_{t=1}^Tz_t \leq c \\
+    & \quad z_t \geq 0 \\
+    & \quad z_t \geq u_t - w^Tr_t^{cum} - \zeta \\
+    & \quad u_t \geq w^Tr_t^{cum} \\
+    & \quad u_{t} \geq u_{t-1}
 \end{align*}
 $$

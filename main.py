@@ -44,10 +44,15 @@ if __name__ == '__main__':
         case 'mean_avg_draw_down':
             c = cfg['mean_avg_draw_down']['c']
             w = portfolio.mean_avg_drawdown(X, c)
+        case 'mean_cdar':
+            c = cfg['mean_cdar']['c']
+            alpha = cfg['mean_cdar']['alpha']
+            w = portfolio.mean_CDaR(X, c, alpha)
         case _:
             w = None
             print('Please Specify an implemented method')
     if w is not None:
         w = np.round(w, 2)
         table = tabulize_result(codes, w)
+        print(f'{cfg['method']} portfolio')
         print(table)

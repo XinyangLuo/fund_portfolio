@@ -12,9 +12,12 @@ mean_downside_risk:
 
 mean_cvar:
     lambda: 0.5
-    alpha: 0.95
+    alpha: 0.99
 
 mean_max_draw_down:
     c: 0.2
 
-method: 'mean_max_draw_down'
+mean_avg_draw_down:
+    c: 0.2
+
+method: 'mean_avg_draw_down'

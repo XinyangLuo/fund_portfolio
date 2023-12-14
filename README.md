@@ -66,3 +66,16 @@ $$
     & \quad w^Tr_t^{cum} \leq u_t \leq w^Tr_t^{cum} + c \quad \forall 1 \leq t \leq T
 \end{align*}
 $$
+
+### Mean Average Drawdown portfolio
+
+$$
+\begin{align*}
+    \max\limits_{w,u} & \quad w^T\mu \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0 \\
+    & \quad u_{t-1} \leq u_t \quad \forall 1 < t \leq T \\
+    & \quad w^Tr_t^{cum} \leq u_t \\
+    & \quad \frac{1}{T}\sum\limits_{t=1}^Tu_t \leq \frac{1}{T}\sum\limits_{t=1}^Tw^Tr_t^{cum} + c
+\end{align*}
+$$

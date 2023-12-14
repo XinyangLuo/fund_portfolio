@@ -1,4 +1,4 @@
-codes: ['002943', '000006', '001763', '000176', '050025', '006479']
+codes: ['001763', '000176', '050025', '006479']
 look_back: 180
 
 robust_markowitz_robust:
@@ -6,4 +6,8 @@ robust_markowitz_robust:
     delta: 0.1
     lambda: 0.5
 
-method: 'robust_markowitz_robust'
+mean_downside_risk:
+    lambda: 0.5
+    alpha: 2
+
+method: 'mean_downside_risk'

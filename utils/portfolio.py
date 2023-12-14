@@ -11,3 +11,13 @@ def robust_markowitz_robust(mu_hat, sigma_hat, kappa, delta, lmd=0.5):
     prob = cp.Problem(obj, constraints)
     prob.solve(solver=cp.ECOS)
     return w.value
+
+def mean_downsid_risk(X: np.ndarray, lmd=0.5, alpha=2):
+    T, N = X.shape
+    mu = X.mean(axis=0)
+    w = cp.Variable(N)
+    obj = cp.Maximize(w.T @ mu - lmd/T*sum(cp.pos(mu.T @ w - X @ w)**alpha))
+    constraints = [w >= 0, sum(w) == 1]
+    prob = cp.Problem(obj, constraints)
+    prob.solve()
+    return w.value

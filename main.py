@@ -4,8 +4,9 @@ import argparse
 import numpy as np
 
 from utils.crawler import get_multiple_returns
-from utils.portfolio import robust_markowitz_robust
 from utils.visualize import tabulize_result
+from utils import portfolio
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -26,9 +27,15 @@ if __name__ == '__main__':
         kappa = cfg['robust_markowitz_robust']['kappa']
         delta = cfg['robust_markowitz_robust']['delta']/np.sqrt(T-1)
         lmd = cfg['robust_markowitz_robust']['lambda']
-        w = robust_markowitz_robust(mu, Sigma, kappa, delta, lmd)
+        w = portfolio.robust_markowitz_robust(mu, Sigma, kappa, delta, lmd)
+    elif cfg['method'] == 'mean_downside_risk':
+        lmd = cfg['mean_downside_risk']['lambda']
+        alpha = cfg['mean_downside_risk']['alpha']
+        w = portfolio.mean_downsid_risk(df.to_numpy(), lmd, alpha)
+    else:
+        w = None
+        print('Please Specify an implemented method')
+    if w is not None:
         w = np.round(w, 2)
         table = tabulize_result(codes, w)
         print(table)
-    else:
-        print('Please Specify an implemented method')

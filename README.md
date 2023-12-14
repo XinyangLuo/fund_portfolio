@@ -22,7 +22,6 @@ python main.py --cfg_path={CONFIG_PATH}
 ## Supported Portfolio
 
 ### robust Markowitz’s mean-variance portfolio
-Optimize the following problem:
 
 $$
 
@@ -32,4 +31,14 @@ $$
     & \quad w \geq 0
 \end{align*}
 
+$$
+
+### Mean-downside risk portfolio
+
+$$
+\begin{align*}
+    \max\limits_w & \quad w^T - \lambda\frac{1}{T}\sum\limits_{t=1}^T(w^T\mu - w^Tr_t)^\alpha \\
+    s.t. & \quad 1^Tw = 1 \\
+    & \quad w \geq 0
+\end{align*}
 $$

@@ -5,6 +5,7 @@ import numpy as np
 
 from crawler import get_multiple_returns
 from portfolio import robust_markowitz_robust
+from utils import tabulize_result
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -25,6 +26,8 @@ if __name__ == '__main__':
         delta = cfg['robust_markowitz_robust']['delta']/np.sqrt(T-1)
         lmd = cfg['robust_markowitz_robust']['lambda']
         w = robust_markowitz_robust(mu, Sigma, kappa, delta, lmd)
-        print(dict(zip(codes, np.round(w, 2))))
+        w = np.round(w, 2)
+        table = tabulize_result(codes, w)
+        print(table)
     else:
         print('Please Specify an implemented method')

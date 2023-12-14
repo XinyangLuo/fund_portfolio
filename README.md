@@ -25,10 +25,11 @@ python main.py --cfg_path={CONFIG_PATH}
 Optimize the following problem:
 
 $$
+
 \begin{align*}
     \max\limits_w & \quad w^T\hat\mu - \kappa||\hat\Sigma^{\frac{1}{2}}w||_2 - \lambda(||\hat\Sigma^{\frac{1}{2}}w||_2 + \frac{\delta}{\sqrt{T-1}}||w||_2) \\
     s.t. & \quad 1^Tw = 1 \\
     & \quad w \geq 0
-
 \end{align*}
+
 $$

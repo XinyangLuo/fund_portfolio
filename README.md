@@ -6,18 +6,18 @@ This repo will crawl the historical data of designated funds and calculate a opt
 
 Use the following command to install the dependencies
 
-``
+```
 conda create -n fof
 conda activate fof
 pip install -r requirements.txt
-``
+```
 
 ## Running
 Run the following command to get the optimized weight. *CONFIG_PATH* is the path to your yaml config file
 
-``
+```
 python main.py --cfg_path={CONFIG_PATH}
-``
+```
 
 ## Supported Portfolio
 

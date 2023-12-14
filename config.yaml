@@ -24,4 +24,4 @@ mean_cdar:
     c: 0.1
     alpha: 0.95
 
-method: 'mean_max_draw_down'
+method: 'mean_cdar'

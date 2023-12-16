@@ -1,5 +1,6 @@
 codes: ['002943', '006479', '000006', '050025']
 look_back: 60
+capital: 80000
 
 robust_markowitz_robust:
     kappa: 1.0
@@ -24,4 +25,8 @@ mean_cdar:
     c: 0.1
     alpha: 0.95
 
-method: 'most_diversified'
+risk_parity:
+    equal_risk: True
+    budget: [0.3, 0.2, 0.25, 0.25]
+
+method: 'risk_parity'

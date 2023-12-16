@@ -21,7 +21,7 @@ python main.py --cfg_path={CONFIG_PATH}
 
 ## Supported Portfolio
 
-### robust Markowitz’s mean-variance portfolio
+### Robust Markowitz’s Mean-Variance Portfolio
 
 $$
 
@@ -33,7 +33,7 @@ $$
 
 $$
 
-### Mean downside risk portfolio
+### Mean Downside Risk Portfolio
 
 $$
 \begin{align*}
@@ -43,7 +43,7 @@ $$
 \end{align*}
 $$
 
-### Mean CVaR portfolio
+### Mean CVaR Portfolio
 
 $$
 \begin{align*}
@@ -55,7 +55,7 @@ $$
 \end{align*}
 $$
 
-### Mean Max Drawdown portfolio
+### Mean Max Drawdown Portfolio
 
 $$
 \begin{align*}
@@ -67,7 +67,7 @@ $$
 \end{align*}
 $$
 
-### Mean Average Drawdown portfolio
+### Mean Average Drawdown Portfolio
 
 $$
 \begin{align*}
@@ -80,7 +80,7 @@ $$
 \end{align*}
 $$
 
-### Mean CDaR portfolio
+### Mean CDaR Portfolio
 
 $$
 \begin{align*}
@@ -105,3 +105,15 @@ $$
     
 \end{align*}
 $$
+
+### Risk Parity Portfolio
+
+The total volatility of a portfolio is $\sigma(w) = \sqrt{w^T\Sigma w}$. 
+
+Each asset has risk contribution $RC_i = w_i\frac{\partial \sigma(w)}{\partial w_i} = w_i\frac{(\Sigma w)_i}{\sigma(w)}$
+
+Its relative risk contribution is $RRC_i = \frac{RC_i}{\sigma(w)} = \frac{w_i(\Sigma w)_i}{w^T\Sigma w}$
+
+For risk parity portfolio, we want $RRC_i = \frac{1}{N} \quad i=1,\dots,N$
+
+We can also set risk budget for different assets

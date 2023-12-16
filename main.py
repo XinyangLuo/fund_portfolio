@@ -16,20 +16,18 @@ if __name__ == '__main__':
     with open(f'./{args.cfg_path}') as f:
         cfg = yaml.safe_load(f)
 
-    codes = cfg['codes']
-    codes = [str(c) for c in codes]
+    codes = [str(c) for c in cfg['codes']]
     T = cfg['look_back']
+    N = len(codes)
     df = get_multiple_returns(codes, T)
     X = df.to_numpy()
 
     match cfg['method']:
         case 'robust_markowitz_robust':
-            mu = df.mean(axis=0).to_numpy()
-            Sigma = df.cov().to_numpy()
             kappa = cfg['robust_markowitz_robust']['kappa']
             delta = cfg['robust_markowitz_robust']['delta']/np.sqrt(T-1)
             lmd = cfg['robust_markowitz_robust']['lambda']
-            w = portfolio.robust_markowitz_robust(mu, Sigma, kappa, delta, lmd)
+            w = portfolio.robust_markowitz_robust(X, kappa, delta, lmd)
         case 'mean_downside_risk':
             lmd = cfg['mean_downside_risk']['lambda']
             alpha = cfg['mean_downside_risk']['alpha']
@@ -50,11 +48,17 @@ if __name__ == '__main__':
             w = portfolio.mean_CDaR(X, c, alpha)
         case 'most_diversified':
             w = portfolio.most_diversified(X)
+        case 'risk_parity':
+            if cfg['risk_parity']['equal_risk']:
+                budget = np.repeat(1/N, N)
+            else:
+                budget = np.array(cfg['risk_parity']['budget'])
+            w = portfolio.risk_parity(X, budget)
         case _:
             w = None
             print('Please Specify an implemented method')
     if w is not None:
         w = np.round(w, 2)
-        table = tabulize_result(codes, w)
+        table = tabulize_result(codes, w, cfg['capital'])
         print(f'{cfg['method']} portfolio')
         print(table)

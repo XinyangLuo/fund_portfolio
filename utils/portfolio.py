@@ -1,8 +1,11 @@
 import numpy as np
 import cvxpy as cp
+from scipy.optimize import minimize
 
-def robust_markowitz_robust(mu_hat: np.ndarray, sigma_hat: np.ndarray, kappa: float, delta: float, lmd: float=0.5) -> np.ndarray:
-    N = len(mu_hat)
+def robust_markowitz_robust(X: np.ndarray, kappa: float, delta: float, lmd: float=0.5) -> np.ndarray:
+    T, N = X.shape
+    mu_hat = X.mean(axis=0)
+    sigma_hat = np.cov(X.T)
     S12 = np.linalg.cholesky(sigma_hat).T
     w = cp.Variable(N)
 
@@ -98,3 +101,21 @@ def most_diversified(X: np.ndarray) -> np.ndarray:
     prob = cp.Problem(obj, constraints)
     prob.solve()
     return w.value/sum(w.value)
+
+def risk_parity(X: np.ndarray, budget: np.ndarray) -> np.ndarray:
+    T, N = X.shape
+    cov = np.cov(X.T)
+
+    def risk_budget_objective(weights, cov, budget):
+        sigma = weights.T @ cov @ weights
+
+        RRC = weights * (cov @ weights) / sigma
+        J = np.linalg.norm(RRC-budget, 2)
+        return J
+    
+    x0 = np.repeat(1/N, N)
+    cons = ({'type': 'eq', 'fun': lambda x: np.sum(x)-1.0})
+    options = {'disp': False, 'maxiter': 1000}
+    res = minimize(risk_budget_objective, x0, args=(cov, budget), constraints=cons, options=options)
+    w = res.x
+    return w

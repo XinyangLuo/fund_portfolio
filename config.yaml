@@ -1,4 +1,14 @@
-codes: ['002943', '006479', '000006', '050025']
+code_name_dict:
+    '002943': '广发多因子灵活配置混合'
+    '000006': '西部利得量化成长混合A'
+    '270042': '广发纳斯达克100ETF联接A'
+    '050025': '博时标普500ETF联接A'
+    '006328': '易方达中证海外中国互联网50ETF联接'
+    '007280': '摩根日本精选股票A'
+    '002610': '博时黄金ETF联接A'
+
+codes: ['002943', '000006', '270042']
+# codes: ['002943', '000006', '270042', '050025', '006328', '007280', '002610']
 look_back: 60
 capital: 80000
 
@@ -13,7 +23,7 @@ mean_downside_risk:
 
 mean_cvar:
     lambda: 0.5
-    alpha: 0.98
+    alpha: 0.99
 
 mean_max_draw_down:
     c: 0.2
@@ -27,6 +37,7 @@ mean_cdar:
 
 risk_parity:
     equal_risk: True
-    budget: [0.3, 0.2, 0.25, 0.25]
+    budget: [0.15, 0.15, 0.35, 0.35]
 
-method: 'risk_parity'
+# portfolio_name: 'most_diversified'
+portfolio_name: 'mean_cvar'

@@ -16,13 +16,14 @@ if __name__ == '__main__':
     with open(f'./{args.cfg_path}') as f:
         cfg = yaml.safe_load(f)
 
-    codes = [str(c) for c in cfg['codes']]
+    codes = cfg['codes']
     T = cfg['look_back']
     N = len(codes)
     df = get_multiple_returns(codes, T)
     X = df.to_numpy()
+    portfolio_name = cfg['portfolio_name']
 
-    match cfg['method']:
+    match portfolio_name:
         case 'robust_markowitz_robust':
             kappa = cfg['robust_markowitz_robust']['kappa']
             delta = cfg['robust_markowitz_robust']['delta']/np.sqrt(T-1)
@@ -59,6 +60,6 @@ if __name__ == '__main__':
             print('Please Specify an implemented method')
     if w is not None:
         w = np.round(w, 2)
-        table = tabulize_result(codes, w, cfg['capital'])
-        print(f'{cfg['method']} portfolio')
+        code_name_dict = cfg['code_name_dict']
+        table = tabulize_result(codes, w, cfg['capital'], code_name_dict, portfolio_name)
         print(table)

@@ -1,6 +1,9 @@
 import numpy as np
 import cvxpy as cp
 from scipy.optimize import minimize
+from warnings import simplefilter
+
+simplefilter(action='ignore', category=FutureWarning)
 
 def robust_markowitz_robust(X: np.ndarray, kappa: float, delta: float, lmd: float=0.5) -> np.ndarray:
     T, N = X.shape
@@ -12,7 +15,7 @@ def robust_markowitz_robust(X: np.ndarray, kappa: float, delta: float, lmd: floa
     obj = cp.Maximize(w.T @ mu_hat - kappa*cp.norm2(S12 @ w) - lmd*(cp.norm2(S12 @ w) + delta*cp.norm2(w))**2)
     constraints = [w >= 0, sum(w) == 1]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def mean_downsid_risk(X: np.ndarray, lmd: float=0.5, alpha: int=2) -> np.ndarray:
@@ -23,7 +26,7 @@ def mean_downsid_risk(X: np.ndarray, lmd: float=0.5, alpha: int=2) -> np.ndarray
     obj = cp.Maximize(w.T @ mu - lmd/T*sum(cp.pos(mu.T @ w - X @ w)**alpha))
     constraints = [w >= 0, sum(w) == 1]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def mean_cvar(X: np.ndarray, lmd: float=0.5, alpha: float=0.95) -> np.ndarray:
@@ -37,7 +40,7 @@ def mean_cvar(X: np.ndarray, lmd: float=0.5, alpha: float=0.95) -> np.ndarray:
     constraints = [w >= 0, sum(w) == 1, z >= 0,
                    z >= -X @ w -zeta]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def mean_max_drawdown(X: np.ndarray, c: float=0.2) -> np.ndarray:
@@ -53,7 +56,7 @@ def mean_max_drawdown(X: np.ndarray, c: float=0.2) -> np.ndarray:
                    u >= X_cum @ w,
                    u[1:] >= u[:-1]]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def mean_avg_drawdown(X: np.ndarray, c: float=0.2) -> np.ndarray:
@@ -69,7 +72,7 @@ def mean_avg_drawdown(X: np.ndarray, c: float=0.2) -> np.ndarray:
                    u >= X_cum @ w,
                    u[1:] >= u[:-1]]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def mean_CDaR(X: np.ndarray, c: float=0.1, alpha: float=0.95) -> np.ndarray:
@@ -88,7 +91,7 @@ def mean_CDaR(X: np.ndarray, c: float=0.1, alpha: float=0.95) -> np.ndarray:
                    u >= X_cum @ w,
                    u[1:] >= u[:-1]]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value
 
 def most_diversified(X: np.ndarray) -> np.ndarray:
@@ -99,7 +102,7 @@ def most_diversified(X: np.ndarray) -> np.ndarray:
     obj = cp.Minimize(cp.quad_form(w, Sigma))
     constraints = [w >= 0, w.T @ Sigma.diagonal() == 1]
     prob = cp.Problem(obj, constraints)
-    prob.solve()
+    prob.solve(solver='ECOS')
     return w.value/sum(w.value)
 
 def risk_parity(X: np.ndarray, budget: np.ndarray) -> np.ndarray:

@@ -18,7 +18,7 @@ def robust_markowitz_robust(X: np.ndarray, kappa: float, delta: float, lmd: floa
     prob.solve(solver='ECOS')
     return w.value
 
-def mean_downsid_risk(X: np.ndarray, lmd: float=0.5, alpha: int=2) -> np.ndarray:
+def mean_downside_risk(X: np.ndarray, lmd: float=0.5, alpha: int=2) -> np.ndarray:
     T, N = X.shape
     mu = X.mean(axis=0)
     w = cp.Variable(N)
@@ -38,7 +38,7 @@ def mean_cvar(X: np.ndarray, lmd: float=0.5, alpha: float=0.95) -> np.ndarray:
 
     obj = cp.Maximize(w.T @ mu - lmd*(zeta + 1/(T*(1-alpha))*sum(z)))
     constraints = [w >= 0, sum(w) == 1, z >= 0,
-                   z >= -X @ w -zeta]
+                   z >= -X @ w - zeta]
     prob = cp.Problem(obj, constraints)
     prob.solve(solver='ECOS')
     return w.value

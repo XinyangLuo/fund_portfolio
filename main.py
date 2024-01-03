@@ -32,7 +32,7 @@ if __name__ == '__main__':
         case 'mean_downside_risk':
             lmd = cfg['mean_downside_risk']['lambda']
             alpha = cfg['mean_downside_risk']['alpha']
-            w = portfolio.mean_downsid_risk(X, lmd, alpha)
+            w = portfolio.mean_downside_risk(X, lmd, alpha)
         case 'mean_cvar':
             lmd = cfg['mean_cvar']['lambda']
             alpha = cfg['mean_cvar']['alpha']

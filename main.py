@@ -59,7 +59,6 @@ if __name__ == '__main__':
             w = None
             print('Please Specify an implemented method')
     if w is not None:
-        w = np.round(w, 2)
         code_name_dict = cfg['code_name_dict']
         table = tabulize_result(codes, w, cfg['capital'], code_name_dict, portfolio_name)
         print(table)

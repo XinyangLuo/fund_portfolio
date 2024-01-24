@@ -82,11 +82,12 @@ def get_multiple_returns(codes: list[str], T: int=90) -> pd.DataFrame:
     df = []
     with tqdm(codes) as t:
         for code in t:
-            df.append(get_fund_k_history(code, T+1))
+            df.append(get_fund_k_history(code, T))
             t.set_postfix({'fetching': code})
     df = pd.concat(df, axis=1)
     df.columns = codes
     df.replace('--', 0, inplace=True)
-    df = df.iloc[1:-1].astype(float)
+    df = df.astype(float)
     df = (df/100+1).apply(np.log)
+    df.sort_index(inplace=True)
     return df.fillna(0)

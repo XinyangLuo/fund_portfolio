@@ -37,8 +37,8 @@ def mean_cvar(X: np.ndarray, lmd: float=0.5, alpha: float=0.95) -> np.ndarray:
     zeta = cp.Variable(1)
 
     obj = cp.Maximize(w.T @ mu - lmd*(zeta + 1/(T*(1-alpha))*sum(z)))
-    constraints = [w >= 0, sum(w) == 1, z >= 0,
-                   z >= -X @ w - zeta]
+    constraints = [w >= 0, sum(w) == 1, w <= 0.2, 
+                   z >= 0, z >= -X @ w - zeta]
     prob = cp.Problem(obj, constraints)
     prob.solve(solver='ECOS')
     return w.value
